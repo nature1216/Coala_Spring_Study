@@ -1,57 +1,85 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>°Ô½ÃÆÇ</title>
+<meta charset="UTF-8">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>ê²Œì‹œíŒ</title>
 </head>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var formObj = $("form[name='readForm']");
+		//ìˆ˜ì •
+		$(".update_btn").on("click",function(){
+			formObj.attr("action","/board/updateView");
+			formObj.attr("method","get");
+			formObj.submit();
+		})
+		
+		//ì‚­ì œ
+		$(".delete_btn").on("click",function(){
+			formObj.attr("action","/board/delete");
+			formObj.attr("method","post");
+			formObj.submit();
+		})
+		
+		//ì·¨ì†Œ
+		$(".list_btn").on("click",function(){
+			location.href = "/board/list";
+		})
+	})
+</script>
 <body>
 	<div id="root">
 		<header>
-			<h1>°Ô½ÃÆÇ</h1>
+			<h1>ê²Œì‹œíŒ</h1>
 		</header>
 		<hr />
 		
 		<nav>
-			È¨ - ±Û ÀÛ¼º
+			í™ˆ - ê¸€ ì‘ì„±
 		</nav>
 		<hr />
 		
-		<section id = "container">
-			<form role="form" method="post">
-				<table>
-					<tr>
-						<td>
-							<label for="bno">±Û ¹øÈ£</label><input type="text" id="bno" name="bno" value="${read.bno}"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="title">Á¦¸ñ</label><input type="text" id="title" name="title" value="${read.title}"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="content">³»¿ë</label><textarea id="content" name="content"><c:out value="${read.content}"/></textarea>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="writer">ÀÛ¼ºÀÚ</label><input type="text" id="writer" name="writer" value="${read.writer}"/>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<label for="bno">ÀÛ¼º³¯Â¥</label>
-							<fmt:formatDate value="${read.regdate}" pattern="yyyy-MM-dd" />
-						</td>
-					</tr>
-				</table>
+		<section id="container">
+			<form name="readForm" role="form" method="post">
+				<input type="hidden" id="bno" name="bno" value="${read.bno}" />
 			</form>
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<label for="title">ì œëª©</label><input type="text" id="title" name="title" value="${read.title}" readonly="readonly" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="content">ë‚´ìš©</label><textarea id="content" name="content" readonly="readonly"><c:out value="${read.content}"/></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="writer">ì‘ì„±ì</label><input type="text" id="writer" name="writer" value="${read.writer}" readonly="readonly" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="regdate">ì‘ì„±ë‚ ì§œ</label>
+								<fmt:formatDate value="${read.regdate}" pattern="yyyy-MM-dd"/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div>
+					<button type="submit" class="update_btn">ìˆ˜ì •</button>
+					<button type="submit" class="delete_btn">ì‚­ì œ</button>
+					<button type="submit" class="list_btn">ëª©ë¡</button>
+				</div>
 		</section>
+		<hr />
 	</div>
 </body>
 </html>
